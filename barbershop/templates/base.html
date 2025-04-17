@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Барбершоп{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Барбершоп "Стильная Щетина"</h1>
+        <nav>
+            <a href="{% url 'landing' %}">Главная</a> |
+            <a href="{% url 'orders_list' %}">Список заявок</a>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Барбершоп "Стильная Щетина". Все права защищены.</p>
+    </footer>
+    
+    {% load static %}
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - Барбершоп{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h2>Добро пожаловать в Барбершоп "Стильная Щетина"</h2>
+    <p>Мы делаем стрижки, которые запоминаются (иногда в ночных кошмарах)!</p>
+</div>
+
+<div class="container">
+    <div class="services-section">
+        <h2>Наши услуги</h2>
+        <div class="services-list">
+            {% for service in services %}
+            <div class="service-item">
+                <h3>{{ service }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="masters-section">
+        <h2>Наши мастера</h2>
+        <div class="masters-list">
+            {% for master in masters %}
+            <div class="master-item">
+                <h3>{{ master.name }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

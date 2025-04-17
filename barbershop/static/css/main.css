@@ -1,0 +1,123 @@
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+.container {
+    margin: 2rem 0;
+}
+
+.hero-section {
+    background-color: #f8f9fa;
+    padding: 3rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.services-section, .masters-section {
+    margin: 2rem 0;
+}
+
+.service-item, .master-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+.order-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+.status-new {
+    color: blue;
+}
+
+.status-confirmed {
+    color: green;
+}
+
+.status-cancelled {
+    color: red;
+}
+
+.status-completed {
+    color: purple;
+}
+
+.thanks-message {
+    text-align: center;
+    margin: 4rem 0;
+    padding: 2rem;
+    background-color: #e8f5e9;
+    border-radius: 10px;
+}
+
+footer {
+    margin-top: 3rem;
+    padding: 1rem 0;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+button, .btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover, .btn:hover {
+    background-color: #45a049;
+}
+
+.back-link {
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

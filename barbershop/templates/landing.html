@@ -1,34 +1,149 @@
 {% extends 'base.html' %}
 
-{% block title %}Главная - Барбершоп{% endblock %}
+{% block title %}Главная - Барбершоп "Стальная Борода"{% endblock %}
 
 {% block content %}
-<div class="hero-section">
-    <h2>Добро пожаловать в Барбершоп "Стильная Щетина"</h2>
-    <p>Мы делаем стрижки, которые запоминаются (иногда в ночных кошмарах)!</p>
-</div>
+<!-- Герой-секция -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Барбершоп "Стальная Борода"</h1>
+        <p class="hero-subtitle">Мы делаем стрижки с характером для мужчин с характером!</p>
+        <a href="#booking" class="btn btn-primary btn-lg">Записаться сейчас</a>
+    </div>
+</section>
 
-<div class="container">
-    <div class="services-section">
-        <h2>Наши услуги</h2>
-        <div class="services-list">
+<!-- О нас секция -->
+<section id="about" class="py-5">
+    <div class="container">
+        <h2 class="section-title">О нас</h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <p>Барбершоп "Стальная Борода" — это не просто парикмахерская, это место, где создаются настоящие мужские образы. Здесь вы получите не только отличную стрижку, но и заряд уверенности в себе.</p>
+                <p>Наши мастера — профессионалы своего дела, владеющие всеми современными техниками стрижки и бритья. Мы используем только качественные материалы и инструменты, чтобы результат работы радовал вас долгое время.</p>
+                <p>Наша миссия — сделать каждого мужчину увереннее в себе, предоставив безупречный уровень сервиса и результат, превосходящий ожидания.</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="О нашем барбершопе" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Секция услуг -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Наши услуги</h2>
+        <div class="row">
             {% for service in services %}
-            <div class="service-item">
-                <h3>{{ service }}</h3>
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service }}</h5>
+                        <p class="card-text">Профессиональный подход и внимание к деталям делают наши услуги уникальными.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <a href="#booking" class="btn btn-outline-primary">Записаться</a>
+                    </div>
+                </div>
             </div>
             {% endfor %}
         </div>
     </div>
-    
-    <div class="masters-section">
-        <h2>Наши мастера</h2>
-        <div class="masters-list">
+</section>
+
+<!-- Секция мастеров -->
+<section id="masters" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Наши мастера</h2>
+        <div class="row">
             {% for master in masters %}
-            <div class="master-item">
-                <h3>{{ master.name }}</h3>
+            <div class="col-md-6 col-lg-4">
+                <div class="card master-card h-100">
+                    <img src="https://via.placeholder.com/350x200?text=Мастер+{{ master.id }}" class="card-img-top" alt="{{ master.name }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ master.name }}</h5>
+                        <p class="card-text">Мастер с многолетним опытом, специализирующийся на создании уникальных образов.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0 text-center">
+                        <a href="#booking" class="btn btn-outline-primary">Записаться к мастеру</a>
+                    </div>
+                </div>
             </div>
             {% endfor %}
         </div>
     </div>
-</div>
+</section>
+
+<!-- Секция записи -->
+<section id="booking" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Запись</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="booking-form" action="{% url 'thanks' %}" method="get">
+                            <div class="mb-3">
+                                <label for="clientName" class="form-label">Ваше имя</label>
+                                <input type="text" class="form-control" id="clientName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="masterSelect" class="form-label">Выберите мастера</label>
+                                <select class="form-select" id="masterSelect" required>
+                                    <option value="" selected disabled>Выберите мастера...</option>
+                                    {% for master in masters %}
+                                    <option value="{{ master.id }}">{{ master.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Выберите услуги</label>
+                                <div class="row">
+                                    {% for service in services %}
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            {% for service in services %}
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" value="{{ service }}" id="service{{ forloop.counter }}">
+                                            <label class="form-check-label" for="service{{ forloop.counter }}">
+                                                {{ service }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookingDate" class="form-label">Дата</label>
+                                <input type="date" class="form-control" id="bookingDate" required min="{{ min_date }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Записаться</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Установка минимальной даты на сегодня
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        const formattedToday = yyyy + '-' + mm + '-' + dd;
+        document.getElementById('bookingDate').min = formattedToday;
+    });
+</script>
 {% endblock %}

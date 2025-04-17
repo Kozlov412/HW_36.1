@@ -1,123 +1,126 @@
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-header {
-    margin-bottom: 2rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
     color: #333;
 }
 
-.container {
-    margin: 2rem 0;
+.section-title {
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 15px;
 }
 
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #007bff;
+}
+
+section {
+    padding: 4rem 0;
+}
+
+/* Стили для героя и секций */
 .hero-section {
-    background-color: #f8f9fa;
-    padding: 3rem 0;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/static/img/barbershop-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 6rem 0;
     text-align: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.services-section, .masters-section {
-    margin: 2rem 0;
+/* Стили для нав-бара */
+.navbar {
+    transition: all 0.3s ease;
 }
 
-.service-item, .master-item {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border: 1px solid #eee;
-    border-radius: 5px;
+.navbar.scrolled {
+    background-color: rgba(0,0,0,0.9) !important;
 }
 
-.order-list {
-    list-style-type: none;
-    padding: 0;
+/* Стили для карточек мастеров и услуг */
+.master-card, .service-card {
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
 }
 
-.order-item {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border: 1px solid #eee;
-    border-radius: 5px;
+.master-card:hover, .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.master-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Стили для заявок и статусов */
+.order-card {
+    border-left: 5px solid #007bff;
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .status-new {
-    color: blue;
+    background-color: #ffc107;
+    color: #000;
 }
 
 .status-confirmed {
-    color: green;
-}
-
-.status-cancelled {
-    color: red;
+    background-color: #007bff;
+    color: #fff;
 }
 
 .status-completed {
-    color: purple;
+    background-color: #28a745;
+    color: #fff;
 }
 
-.thanks-message {
-    text-align: center;
-    margin: 4rem 0;
-    padding: 2rem;
-    background-color: #e8f5e9;
-    border-radius: 10px;
+.status-cancelled {
+    background-color: #dc3545;
+    color: #fff;
 }
 
+/* Стили для footer */
 footer {
-    margin-top: 3rem;
-    padding: 1rem 0;
-    border-top: 1px solid #eee;
+    background-color: #343a40;
+    color: #fff;
+    padding: 3rem 0;
+}
+
+/* Стили для страницы thanks */
+.thanks-container {
     text-align: center;
+    padding: 5rem 0;
 }
 
-button, .btn {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
+.thanks-icon {
+    font-size: 5rem;
+    color: #28a745;
+    margin-bottom: 1.5rem;
 }
 
-button:hover, .btn:hover {
-    background-color: #45a049;
-}
-
-.back-link {
-    margin-top: 1rem;
-    display: inline-block;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+.countdown {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem 0;
 }

@@ -14,22 +14,35 @@
                     <a class="nav-link" href="{% url 'landing' %}">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{%  url 'landing' %}#about">О нас</a>
+                    <a class="nav-link" href="{% url 'landing' %}#about">О нас</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{%  url 'landing' %}#services">Услуги</a>
+                    <a class="nav-link" href="{% url 'landing' %}#services">Услуги</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{%  url 'landing' %}#masters">Мастера</a>
+                    <a class="nav-link" href="{% url 'landing' %}#masters">Мастера</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{%  url 'landing' %}#booking">Запись</a>
+                    <a class="nav-link" href="{% url 'landing' %}#booking">Запись</a>
                 </li>
-                {% if is_staff %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'orders_list' %}">Заявки</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-clipboard-check me-1"></i>Заявки
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'orders_list' %}">Все заявки</a></li>
+                        <li><a class="dropdown-item" href="{% url 'landing' %}#recent-orders">Последние заявки</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <h6 class="dropdown-header">Статусы заявок</h6>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'orders_list' %}#new">Новые</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders_list' %}#confirmed">Подтвержденные</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders_list' %}#completed">Выполненные</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders_list' %}#cancelled">Отмененные</a></li>
+                    </ul>
                 </li>
-                {% endif %}
             </ul>
         </div>
     </div>

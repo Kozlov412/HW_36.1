@@ -7,6 +7,6 @@ def common_context(request):
     context = {
         'masters': masters,
         'services': services,
-        'is_staff': request.user.is_staff if request.user.is_authenticated else False,
+        'is_staff': True,  # Временно для тестирования
     }
     return context

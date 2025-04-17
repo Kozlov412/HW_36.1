@@ -54,15 +54,163 @@
         </div>
     </div>
 
-    <!-- Список заявок -->
-    <div id="orders-list">
-        {% for order in orders %}
-            {% include 'includes/order_card.html' %}
-        {% empty %}
-            <div class="alert alert-info">
-                <i class="bi bi-info-circle me-2"></i>Нет доступных заявок
-            </div>
-        {% endfor %}
+    <!-- Навигация по вкладкам для разных статусов -->
+    <ul class="nav nav-tabs mb-4" id="ordersTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" 
+                    type="button" role="tab" aria-controls="all" aria-selected="true">
+                Все заявки <span class="badge bg-secondary">{{ orders|length }}</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="new-tab" data-bs-toggle="tab" data-bs-target="#new" 
+                    type="button" role="tab" aria-controls="new" aria-selected="false">
+                Новые 
+                <span class="badge bg-warning text-dark">
+                    {% with new_count=0 %}
+                        {% for order in orders %}
+                            {% if order.status == 'новая' %}
+                                {% with new_count=new_count|add:1 %}{% endwith %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ new_count }}
+                    {% endwith %}
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="confirmed-tab" data-bs-toggle="tab" data-bs-target="#confirmed" 
+                    type="button" role="tab" aria-controls="confirmed" aria-selected="false">
+                Подтвержденные 
+                <span class="badge bg-primary">
+                    {% with confirmed_count=0 %}
+                        {% for order in orders %}
+                            {% if order.status == 'подтвержденная' %}
+                                {% with confirmed_count=confirmed_count|add:1 %}{% endwith %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ confirmed_count }}
+                    {% endwith %}
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" 
+                    type="button" role="tab" aria-controls="completed" aria-selected="false">
+                Выполненные 
+                <span class="badge bg-success">
+                    {% with completed_count=0 %}
+                        {% for order in orders %}
+                            {% if order.status == 'выполненная' %}
+                                {% with completed_count=completed_count|add:1 %}{% endwith %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ completed_count }}
+                    {% endwith %}
+                </span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" 
+                    type="button" role="tab" aria-controls="cancelled" aria-selected="false">
+                Отмененные 
+                <span class="badge bg-danger">
+                    {% with cancelled_count=0 %}
+                        {% for order in orders %}
+                            {% if order.status == 'отмененная' %}
+                                {% with cancelled_count=cancelled_count|add:1 %}{% endwith %}
+                            {% endif %}
+                        {% endfor %}
+                        {{ cancelled_count }}
+                    {% endwith %}
+                </span>
+            </button>
+        </li>
+    </ul>
+
+    <!-- Содержимое вкладок -->
+    <div class="tab-content" id="ordersTabsContent">
+        <!-- Все заявки -->
+        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            {% for order in orders %}
+                {% include 'includes/order_card.html' %}
+            {% empty %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>Нет доступных заявок
+                </div>
+            {% endfor %}
+        </div>
+           <!-- Новые заявки -->
+           <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">
+            {% with has_new_orders=False %}
+                {% for order in orders %}
+                    {% if order.status == 'новая' %}
+                        {% include 'includes/order_card.html' %}
+                        {% with has_new_orders=True %}{% endwith %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if not has_new_orders %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>Нет новых заявок
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Подтвержденные заявки -->
+        <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
+            {% with has_confirmed_orders=False %}
+                {% for order in orders %}
+                    {% if order.status == 'подтвержденная' %}
+                        {% include 'includes/order_card.html' %}
+                        {% with has_confirmed_orders=True %}{% endwith %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if not has_confirmed_orders %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>Нет подтвержденных заявок
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Выполненные заявки -->
+        <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+            {% with has_completed_orders=False %}
+                {% for order in orders %}
+                    {% if order.status == 'выполненная' %}
+                        {% include 'includes/order_card.html' %}
+                        {% with has_completed_orders=True %}{% endwith %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if not has_completed_orders %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>Нет выполненных заявок
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Отмененные заявки -->
+        <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+            {% with has_cancelled_orders=False %}
+                {% for order in orders %}
+                    {% if order.status == 'отмененная' %}
+                        {% include 'includes/order_card.html' %}
+                        {% with has_cancelled_orders=True %}{% endwith %}
+                    {% endif %}
+                {% endfor %}
+                
+                {% if not has_cancelled_orders %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>Нет отмененных заявок
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -70,8 +218,18 @@
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Здесь может быть JavaScript для фильтрации заявок
-        // Но так как у нас нет бэкенда для фильтрации, просто добавим заглушку
+        // Активация вкладки на основе хэша URL
+        const hash = window.location.hash;
+        if (hash) {
+            const tabId = hash.substring(1); // удаляем символ # из начала
+            const tab = document.querySelector(`#${tabId}-tab`);
+            if (tab) {
+                const tabTrigger = new bootstrap.Tab(tab);
+                tabTrigger.show();
+            }
+        }
+
+        // Обработчик для фильтров
         document.getElementById('apply-filters').addEventListener('click', function() {
             alert('В данной демо-версии фильтрация не реализована.');
         });

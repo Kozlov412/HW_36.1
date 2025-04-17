@@ -11,8 +11,12 @@ def landing(request):
     today = datetime.date.today()
     min_date = today.strftime('%Y-%m-%d')
     
+    # Сортируем заказы по ID в обратном порядке для отображения последних
+    sorted_orders = sorted(orders, key=lambda x: x['id'], reverse=True)
+    
     context = {
         'min_date': min_date,
+        'orders': sorted_orders,
     }
     return render(request, 'landing.html', context)
 
@@ -30,8 +34,20 @@ def orders_list(request):
     # if not request.user.is_staff:
     #     return redirect('landing')
     
+    # Сортируем заказы по ID в обратном порядке
+    sorted_orders = sorted(orders, key=lambda x: x['id'], reverse=True)
+    
+    # Считаем количество заявок по статусам
+    statuses = {
+        'new': sum(1 for o in orders if o['status'] == 'новая'),
+        'confirmed': sum(1 for o in orders if o['status'] == 'подтвержденная'),
+        'completed': sum(1 for o in orders if o['status'] == 'выполненная'),
+        'cancelled': sum(1 for o in orders if o['status'] == 'отмененная'),
+    }
+    
     context = {
-        'orders': orders
+        'orders': sorted_orders,
+        'statuses': statuses
     }
     return render(request, 'orders_list.html', context)
 

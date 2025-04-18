@@ -70,25 +70,6 @@ section {
     object-fit: cover;
 }
 
-.badge.status-новая {
-    background-color: #ffc107 !important;
-    color: #000;
-}
-
-.badge.status-подтвержденная {
-    background-color: #0d6efd !important;
-    color: #fff;
-}
-
-.badge.status-выполненная {
-    background-color: #198754 !important;
-    color: #fff;
-}
-
-.badge.status-отмененная {
-    background-color: #dc3545 !important;
-    color: #fff;
-}
 
 /* Стили для статусов заявок */
 .badge.status-новая {
@@ -111,22 +92,7 @@ section {
     color: #fff;
 }
 
-/* Стили для карточки заявки в зависимости от статуса */
-.order-card.status-новая {
-    border-left: 5px solid #ffc107;
-}
 
-.order-card.status-подтвержденная {
-    border-left: 5px solid #0d6efd;
-}
-
-.order-card.status-выполненная {
-    border-left: 5px solid #198754;
-}
-
-.order-card.status-отмененная {
-    border-left: 5px solid #dc3545;
-}
 
 /* Стили для меток статуса */
 .badge {

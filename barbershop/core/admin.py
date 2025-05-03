@@ -22,12 +22,6 @@ class OrderAdmin(admin.ModelAdmin):
     filter_horizontal = ['services']
     readonly_fields = ['date_created', 'date_updated']
 
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['client_name', 'master', 'rating', 'created_at', 'is_published']
-    list_filter = ['rating', 'is_published', 'master']
-    search_fields = ['client_name', 'text']
-    readonly_fields = ['created_at']
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

@@ -67,8 +67,13 @@
                             </small>
                         </p>
                     </div>
-                    <div class="card-footer bg-transparent text-center">
-                        <a href="#booking" class="btn btn-outline-primary">Записаться к мастеру</a>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex flex-column gap-2">
+                            <a href="#booking" class="btn btn-outline-primary">Записаться к мастеру</a>
+                            <a href="{% url 'create_review' %}?master_id={{ master.id }}" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-star me-1"></i>Оставить отзыв
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,6 +90,15 @@
 <section id="reviews" class="py-5">
     <div class="container">
         <h2 class="section-title">Отзывы наших клиентов</h2>
+
+          <!-- Кнопка для добавления отзыва -->
+          <div class="text-center mb-4">
+            <a href="{% url 'create_review' %}" class="btn btn-primary">
+                <i class="bi bi-star me-2"></i>Поделиться своим опытом
+            </a>
+        </div>
+
+        <!-- Существующие отзывы -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for review in reviews %}
             <div class="col">
@@ -102,24 +116,37 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <p class="card-text">{{ review.text|linebreaksbr }}</p>
-                        <p class="card-text text-end">
+
+                   <!-- Текст отзыва -->
+                        <p class="card-text">{{ review.text|truncatechars:150 }}</p>
+                        
+                        <!-- Фото, если есть -->
+                        {% if review.photo %}
+                        <div class="review-photo mt-3 mb-2">
+                            <img src="{{ review.photo.url }}" alt="Фото от {{ review.client_name }}" class="img-thumbnail">
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Информация о мастере -->
+                        <p class="card-text mt-3">
                             <small class="text-muted">О мастере: <strong>{{ review.master.name }}</strong></small>
                         </p>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <small class="text-muted">{{ review.created_at|date:"d.m.Y" }}</small>
+                    <div class="card-footer text-muted">
+                        <small>{{ review.created_at|date:"d.m.Y" }}</small>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="col-12 text-center">
-                <p class="lead">Пока нет отзывов. Будьте первым, кто оставит отзыв!</p>
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Пока нет отзывов. Будьте первым, кто оставит отзыв!
+                </div>
             </div>
             {% endfor %}
         </div>
     </div>
-</section>
 
 <!-- Призыв к действию -->
 <section class="py-5 bg-dark text-white">

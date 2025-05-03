@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -11,17 +11,28 @@ from .forms import ReviewForm
 
 def landing(request):
     """
-    Представление для главной страницы (только о нас, мастера и отзывы)
+    Представление для главной страницы (лендинга)
     """
+    # Настраиваем минимальную дату для формы (сегодня)
+    today = datetime.date.today()
+    min_date = today.strftime('%Y-%m-%d')
+    
     # Получаем данные из базы
+    services = Service.objects.all()
     masters = Master.objects.filter(is_active=True)
+    # Получаем последние 3 заказа для примера
+    recent_orders = Order.objects.order_by('-date_created')[:3]
     # Получаем опубликованные отзывы
     reviews = Review.objects.filter(is_published=True).order_by('-created_at')[:6]
     
     context = {
+        'min_date': min_date,
+        'services': services,
         'masters': masters,
+        'orders': recent_orders,
         'reviews': reviews,
     }
+
     return render(request, 'core/landing.html', context)
 
 def thanks(request):

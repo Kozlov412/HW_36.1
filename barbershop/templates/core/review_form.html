@@ -165,40 +165,45 @@
         });
     }
 
-    // AJAX-запрос для получения информации о мастере
-    document.getElementById('id_master').addEventListener('change', function() {
-        const masterId = this.value;
-        if (masterId) {
-            fetch(`/api/master-info/?master_id=${masterId}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    displayMasterInfo(data.master);
-                } else {
-                    console.error('Ошибка:', data.error);
-                    document.getElementById('master-info').innerHTML = `
-                        <div class="alert alert-danger">
-                            <i class="bi bi-exclamation-triangle me-2"></i>${data.error}
-                        </div>
-                    `;
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка загрузки данных:', error);
+    // Функция для получения информации о мастере и отображения карточки
+    function loadMasterInfo(masterId) {
+        if (!masterId) {
+            document.getElementById('master-info').innerHTML = '';
+            return;
+        }
+        
+        fetch(`/api/master-info/?master_id=${masterId}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                displayMasterInfo(data.master);
+            } else {
+                console.error('Ошибка:', data.error);
                 document.getElementById('master-info').innerHTML = `
                     <div class="alert alert-danger">
-                        <i class="bi bi-exclamation-triangle me-2"></i>Ошибка загрузки данных о мастере
+                        <i class="bi bi-exclamation-triangle me-2"></i>${data.error}
                     </div>
                 `;
-            });
-        } else {
-            // Если мастер не выбран, очищаем информацию
-            document.getElementById('master-info').innerHTML = '';
-        }
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки данных:', error);
+            document.getElementById('master-info').innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Ошибка загрузки данных о мастере
+                </div>
+            `;
+        });
+    }
+
+    // AJAX-запрос для получения информации о мастере при изменении
+    document.getElementById('id_master').addEventListener('change', function() {
+        const masterId = this.value;
+        loadMasterInfo(masterId);
     });
 
     // Функция для отображения информации о мастере
@@ -343,6 +348,16 @@
     document.getElementById('review-form').addEventListener('submit', function(event) {
         if (!validateReviewForm()) {
             event.preventDefault();
+        }
+    });
+
+    // ВАЖНО: Добавляем автоматическую загрузку карточки выбранного мастера при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        // При загрузке страницы проверяем, выбран ли мастер
+        const masterSelect = document.getElementById('id_master');
+        if (masterSelect && masterSelect.value) {
+            // Если мастер выбран, загружаем его карточку
+            loadMasterInfo(masterSelect.value);
         }
     });
 </script>

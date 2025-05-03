@@ -281,14 +281,14 @@ def service_create(request):
             
             # После успешного сохранения показываем сообщение об успехе
             success_message = f"Услуга '{name}' успешно создана!"
-            return render(request, 'service_create.html', {  # Изменена ссылка на шаблон
+            return render(request, 'core\service_create.html', {  # Изменена ссылка на шаблон
                 'success_message': success_message,
                 'form_data': {}  # Очищаем форму
             })
             
         except Exception as e:
             error_message = f"Произошла ошибка при сохранении услуги: {str(e)}"
-            return render(request, 'service_create.html', {  # Изменена ссылка на шаблон
+            return render(request, 'core\service_create.html', {  # Изменена ссылка на шаблон
                 'error_message': error_message,
                 'form_data': form_data
             })
@@ -472,3 +472,69 @@ def get_master_info(request):
                 return JsonResponse({'success': False, 'error': 'Мастер не найден'})
         return JsonResponse({'success': False, 'error': 'Не указан ID мастера'})
     return JsonResponse({'success': False, 'error': 'Недопустимый запрос'})
+
+def master_detail_api(request, master_id):
+    """API для получения данных о мастере в формате JSON"""
+    try:
+        master = Master.objects.get(id=master_id)
+        data = {
+            'id': master.id,
+            'name': master.name,
+            'experience': master.experience,
+            'photo_url': master.photo.url if master.photo else None,
+            'services': list(master.services.values_list('name', flat=True)),
+        }
+        return JsonResponse(data)
+    except Master.DoesNotExist:
+        return JsonResponse({'error': 'Мастер не найден'}, status=404)
+    
+
+def booking(request):
+    """Представление для страницы записи к мастеру"""
+    # Получить ID мастера, если он передан в GET-параметрах
+    master_id = request.GET.get('master_id')
+    master = None
+    master_services = None
+    
+    # Если выбран мастер, получим его и его услуги
+    if master_id:
+        try:
+            master = Master.objects.get(id=master_id)
+            master_services = master.services.all()
+        except Master.DoesNotExist:
+            master = None
+    
+    # Получить все услуги, если мастер не выбран или нужны все услуги
+    all_services = Service.objects.all()
+    all_masters = Master.objects.filter(is_active=True)
+    
+    # Настраиваем минимальную дату для формы (сегодня)
+    today = datetime.date.today()
+    min_date = today.strftime('%Y-%m-%d')
+    
+    context = {
+        'master': master,
+        'master_services': master_services,
+        'all_services': all_services,
+        'all_masters': all_masters,
+        'min_date': min_date,
+    }
+    return render(request, 'booking.html', context)
+
+def master_services_api(request, master_id):
+    """API для получения услуг мастера в формате JSON"""
+    try:
+        master = Master.objects.get(id=master_id)
+        services = master.services.all()
+        services_data = [
+            {
+                'id': service.id,
+                'name': service.name,
+                'price': float(service.price),  # Преобразуем Decimal в float для JSON
+                'duration': service.duration
+            }
+            for service in services
+        ]
+        return JsonResponse({'services': services_data})
+    except Master.DoesNotExist:
+        return JsonResponse({'error': 'Мастер не найден'}, status=404)

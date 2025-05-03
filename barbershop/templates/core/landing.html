@@ -67,9 +67,9 @@
                             </small>
                         </p>
                     </div>
-                    <div class="card-footer bg-transparent">
+                    <div class="card-footer bg-transparent border-top-0 text-center">
                         <div class="d-flex flex-column gap-2">
-                            <a href="#booking" class="btn btn-outline-primary">Записаться к мастеру</a>
+                             <a href="{% url 'booking' %}?master_id={{ master.id }}" class="btn btn-outline-primary">Записаться к мастеру</a>
                             <a href="{% url 'create_review' %}?master_id={{ master.id }}" class="btn btn-outline-info btn-sm">
                                 <i class="bi bi-star me-1"></i>Оставить отзыв
                             </a>
@@ -149,7 +149,8 @@
     </div>
 
 <!-- Призыв к действию -->
-<section class="py-5 bg-dark text-white">
+<div class="position-relative" style="margin-top: 100px;  margin-bottom: -50px;">
+<section class="py-5 bg-dark text-white" >
     <div class="container text-center">
         <h2 class="mb-4">Готовы попробовать наши услуги?</h2>
         <p class="lead mb-4">Выберите интересующую услугу или запишитесь на прием прямо сейчас!</p>
@@ -159,4 +160,5 @@
         </div>
     </div>
 </section>
+</div>
 {% endblock %}

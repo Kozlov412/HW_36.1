@@ -8,6 +8,10 @@ urlpatterns = [
     path('thanks/', views.thanks, name='thanks'),
     path('orders/', views.orders_list, name='orders_list'),
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
+    path('api/masters/<int:master_id>/', views.master_detail_api, name='master_detail_api'),
+    path('booking/', views.booking, name='booking'),
+    path('api/masters/<int:master_id>/services/', views.master_services_api, name='master_services_api'),
+    path('services/create/', views.service_create, name='service_create'),
     # Новые маршруты для отзывов
     path('reviews/create/', views.create_review, name='create_review'),
     path('reviews/thanks/', views.review_thanks, name='review_thanks'),

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - Барбершоп "Стальная Борода"{% endblock %}
+
+{% block content %}
+<!-- Герой-секция -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Барбершоп "Стальная Борода"</h1>
+        <p class="hero-subtitle">Мы делаем стрижки с характером для мужчин с характером!</p>
+        <a href="{% url 'booking' %}" class="btn btn-primary btn-lg">Записаться сейчас</a>
+    </div>
+</section>
+
+<!-- О нас секция -->
+<section id="about" class="py-5">
+    <div class="container">
+        <h2 class="section-title">О нас</h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <p>Барбершоп "Стальная Борода" — это не просто парикмахерская, это место, где создаются настоящие мужские образы. Здесь вы получите не только отличную стрижку, но и заряд уверенности в себе.</p>
+                <p>Наши мастера — профессионалы своего дела, владеющие всеми современными техниками стрижки и бритья. Мы используем только качественные материалы и инструменты, чтобы результат работы радовал вас долгое время.</p>
+                <p>Наша миссия — сделать каждого мужчину увереннее в себе, предоставив безупречный уровень сервиса и результат, превосходящий ожидания.</p>
+            </div>
+            <div class="col-lg-6">
+                {% load static %}
+                <img src="{% static 'img/barbershop/10273836697458326_6571.jpg' %}" alt="Интерьер барбершопа" class="img-fluid rounded shadow-lg" style="max-width: 120%; margin-left: 25%;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Секция мастеров -->
+<section id="masters" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Наши мастера</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for master in masters %}
+            <div class="col">
+                <div class="card h-100 shadow-sm master-card">
+                    {% if master.photo %}
+                    <!-- Если у мастера есть загруженное фото, используем его -->
+                    <img src="{{ master.photo.url }}" class="card-img-top master-image" alt="{{ master.name }}">
+                    {% else %}
+                    <!-- Если у мастера нет фото, используем заглушку или дефолтное изображение -->
+                    {% load static %}
+                    <img src="{% static 'img/masters/__1.png' %}" class="card-img-top master-image" alt="{{ master.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ master.name }}</h5>
+                        <p class="card-text">
+                            <strong>Опыт работы:</strong> {{ master.experience }} 
+                            {% if master.experience == 1 %}
+                                год
+                            {% elif 2 <= master.experience <= 4 %}
+                                года
+                            {% else %}
+                                лет
+                            {% endif %}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Специализация: 
+                                {% for service in master.services.all|slice:":3" %}
+                                    {{ service.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                                {% if master.services.count > 3 %}и др.{% endif %}
+                            </small>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent text-center">
+                        <a href="#booking" class="btn btn-outline-primary">Записаться к мастеру</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="lead">В данный момент нет активных мастеров.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Секция отзывов -->
+<section id="reviews" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Отзывы наших клиентов</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for review in reviews %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="card-title">{{ review.client_name }}</h5>
+                            <div class="rating">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    {% else %}
+                                    <i class="bi bi-star text-muted"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="card-text">{{ review.text|linebreaksbr }}</p>
+                        <p class="card-text text-end">
+                            <small class="text-muted">О мастере: <strong>{{ review.master.name }}</strong></small>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted">{{ review.created_at|date:"d.m.Y" }}</small>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="lead">Пока нет отзывов. Будьте первым, кто оставит отзыв!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Призыв к действию -->
+<section class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Готовы попробовать наши услуги?</h2>
+        <p class="lead mb-4">Выберите интересующую услугу или запишитесь на прием прямо сейчас!</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'services' %}" class="btn btn-outline-light btn-lg">Наши услуги</a>
+            <a href="{% url 'booking' %}" class="btn btn-light btn-lg">Записаться</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -12,11 +12,11 @@ STATUS_CHOICES = [
 
 class Service(models.Model):
     """Модель услуги в барбершопе."""
-    name = models.CharField(max_length=200, verbose_name="Название")
+    name = models.CharField(max_length=200, verbose_name="Название", db_index=True)  # индекс на название
     description = models.TextField(blank=True, verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     duration = models.PositiveIntegerField(verbose_name="Длительность", help_text="Время выполнения в минутах")
-    is_popular = models.BooleanField(default=False, verbose_name="Популярная услуга")
+    is_popular = models.BooleanField(default=False, verbose_name="Популярная услуга", db_index=True)  # индекс на популярность
     image = models.ImageField(upload_to="services/", blank=True, verbose_name="Изображение")
     
     def __str__(self):
@@ -26,16 +26,20 @@ class Service(models.Model):
         verbose_name = "Услуга"
         verbose_name_plural = "Услуги"
         ordering = ['name']
+        indexes = [
+            # Составной индекс для сортировки по цене и популярности
+            models.Index(fields=['price', 'is_popular'], name='service_price_popular_idx'),
+        ]
 
 class Master(models.Model):
     """Модель мастера барбершопа."""
-    name = models.CharField(max_length=150, verbose_name="Имя")
+    name = models.CharField(max_length=150, verbose_name="Имя", db_index=True)  # индекс на имя
     photo = models.ImageField(upload_to="masters/", blank=True, verbose_name="Фотография")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     address = models.CharField(max_length=255, verbose_name="Адрес")
     experience = models.PositiveIntegerField(verbose_name="Стаж работы", help_text="Опыт работы в годах")
     services = models.ManyToManyField(Service, related_name="masters", verbose_name="Услуги")
-    is_active = models.BooleanField(default=True, verbose_name="Активен")
+    is_active = models.BooleanField(default=True, verbose_name="Активен", db_index=True)  # индекс на статус активности
     
     def __str__(self):
         return self.name
@@ -44,6 +48,10 @@ class Master(models.Model):
         verbose_name = "Мастер"
         verbose_name_plural = "Мастера"
         ordering = ['name']
+        indexes = [
+            # Составной индекс для фильтрации по опыту и активности
+            models.Index(fields=['experience', 'is_active'], name='master_exp_active_idx'),
+        ]
 
 class Order(models.Model):
     """Модель заказа в барбершопе."""
@@ -54,9 +62,10 @@ class Order(models.Model):
         max_length=50, 
         choices=STATUS_CHOICES, 
         default="not_approved", 
-        verbose_name="Статус"
+        verbose_name="Статус",
+        db_index=True  # добавляем индекс на поле status
     )
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания", db_index=True)  # индекс на дату создания
     date_updated = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     master = models.ForeignKey(
         Master, 
@@ -75,6 +84,10 @@ class Order(models.Model):
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
         ordering = ['-date_created']
+        indexes = [
+            # Составной индекс для полей, часто используемых в поиске и фильтрации
+            models.Index(fields=['status', 'appointment_date'], name='order_status_appt_idx'),
+        ]
 
 class Review(models.Model):
     """Модель отзыва о мастере."""

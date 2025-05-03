@@ -23,35 +23,24 @@ body {
 section {
     padding: 4rem 0;
 }
-
-/* Стили для героя и секций */
-.hero-section {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/static/img/barbershop-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    padding: 6rem 0;
-    text-align: center;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-/* Стили для нав-бара */
+/* Стили для фиксированного меню */
 .navbar {
     transition: all 0.3s ease;
 }
 
-.navbar.scrolled {
-    background-color: rgba(0,0,0,0.9) !important;
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: rgba(33, 37, 41, 0.95) !important; /* Полупрозрачный темный фон */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Добавляем отступ для контента при фиксированном меню */
+body.fixed-nav {
+    padding-top: 76px; /* Высота навбара + немного отступа */
 }
 
 /* Стили для карточек мастеров и услуг */
@@ -65,34 +54,113 @@ section {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.master-card img {
-    height: 200px;
-    object-fit: cover;
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 
-/* Стили для статусов заявок */
-.badge.status-новая {
-    background-color: #ffc107 !important;
-    color: #000;
+.review-card {
+    border-left: 4px solid #007bff;
 }
 
-.badge.status-подтвержденная {
-    background-color: #0d6efd !important;
-    color: #fff;
+.rating .bi-star-fill {
+    color: #ffc107;
 }
 
-.badge.status-выполненная {
-    background-color: #198754 !important;
-    color: #fff;
+.rating .bi-star {
+    color: #e4e5e9;
+}
+/* Добавлен класс master-image для изображений мастеров */
+.master-image {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    margin: 0 auto;
+    display: block;
 }
 
-.badge.status-отмененная {
-    background-color: #dc3545 !important;
-    color: #fff;
+.container-balanced {
+    max-width: 1400px; /* или другой размер, который смотрится хорошо */
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+/* Для секций с фоном - полная ширина фона, но контент с отступами */
+.full-width-section {
+    width: 100%;
+    padding: 60px 0;
+}
+
+/* Для разных размеров экрана */
+@media (max-width: 1200px) {
+    .container-balanced {
+        max-width: 90%;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-balanced {
+        max-width: 95%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
 }
 
 
+/* Стили для карточки заявки в зависимости от статуса */
+.order-card.status-not_approved {
+    border-left: 5px solid #ffc107;
+}
+
+.order-card.status-approved {
+    border-left: 5px solid #0d6efd;
+}
+
+.order-card.status-in_progress {
+    border-left: 5px solid #6c757d;
+}
+
+.order-card.status-completed {
+    border-left: 5px solid #198754;
+}
+
+.order-card.status-cancelled {
+    border-left: 5px solid #dc3545;
+}
+
+/* Стили для карточек в деталях */
+.card.status-not_approved {
+    border-top: 5px solid #ffc107;
+}
+
+.card.status-approved {
+    border-top: 5px solid #0d6efd;
+}
+
+.card.status-in_progress {
+    border-top: 5px solid #6c757d;
+}
+
+.card.status-completed {
+    border-top: 5px solid #198754;
+}
+
+.card.status-cancelled {
+    border-top: 5px solid #dc3545;
+}
 
 /* Стили для меток статуса */
 .badge {
@@ -126,3 +194,139 @@ footer {
     font-weight: bold;
     margin: 1.5rem 0;
 }
+
+
+
+/* Стили для карточек */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-img-top {
+    height: 400px;
+    font-weight: 400px;
+    object-fit: cover;
+    margin-top: 5px;
+
+}
+
+.section-title {
+    margin-bottom: 2rem;
+    position: relative;
+    font-weight: 600;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: #ea0989;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Стили для секций */
+section {
+    padding: 80px 0;
+}
+
+section:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Улучшенный герой-секция */
+.hero-section {
+    padding: 120px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/barbershop/barb3.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.hero-subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    opacity: 0.85;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Улучшенная навигация */
+.navbar {
+    padding: 12px 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.navbar-nav .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 500;
+    position: relative;
+}
+
+.navbar-nav .nav-link.active:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    height: 2px;
+    background: #fff;
+}
+
+/* Отзывы верстка */
+.review-card {
+    padding: 25px;
+}
+
+.rating {
+    color: #ffc107;
+    margin-bottom: 15px;
+}
+
+.review-text {
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.review-author {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.section-divider {
+    height: 5px;
+    background: linear-gradient(to right, transparent, #007bff, transparent);
+    margin: 30px auto;
+    width: 50%;
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+

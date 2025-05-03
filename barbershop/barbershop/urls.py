@@ -18,12 +18,26 @@ from django.contrib import admin
 from django.urls import path, include 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from core import views 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    # Обновленные маршруты для аутентификации
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html', next_page='/'), name='logout'),
+    # Добавляем новый маршрут для создания услуги:
+    path('services/create/', views.service_create, name='service_create'),
+    # URL для создания нового мастера
+    path('masters/create/', views.master_edit, name='master_create'),
+    # URL для редактирования существующего мастера
+    path('masters/<int:master_id>/edit/', views.master_edit, name='master_edit'),
+    
 ]
 
-# Для отображения медиа-файлов в режиме разработки
+# Для отображения медиа и статических файлов в режиме разработки
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += staticfiles_urlpatterns()

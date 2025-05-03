@@ -1,0 +1,195 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    font-size: 18px;  /* Более разумный размер шрифта */
+}
+
+.section-title {
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: #007bff;
+}
+
+section {
+    padding: 4rem 0;
+}
+
+/* Стили для героя и секций */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));  /* Исправлена ошибка */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 6rem 0;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Стили для нав-бара */
+.navbar {
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    background-color: rgba(0,0,0,0.9) !important;
+}
+
+/* Стили для карточек мастеров и услуг */
+.master-card, .service-card {
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.master-card:hover, .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.master-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Добавлен класс master-image для изображений мастеров */
+.master-image {
+    width: 300px;
+    height: auto;
+    position: relative;
+    top: -20px;
+    left: -20px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Исправленный селектор для изображения в секции О нас */
+.img-fluid.rounded.shadow-lg {
+    width: 300px;
+    height: auto;
+    position: relative;
+    top: -20px;
+    left: -20px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+/* Стили для статусов заявок */
+.badge.status-not_approved {
+    background-color: #ffc107 !important;
+    color: #000;
+}
+
+.badge.status-approved {
+    background-color: #0d6efd !important;
+    color: #fff;
+}
+
+.badge.status-in_progress {
+    background-color: #6c757d !important;
+    color: #fff;
+}
+
+.badge.status-completed {
+    background-color: #198754 !important;
+    color: #fff;
+}
+
+.badge.status-cancelled {
+    background-color: #dc3545 !important;
+    color: #fff;
+}
+
+/* Стили для карточки заявки в зависимости от статуса */
+.order-card.status-not_approved {
+    border-left: 5px solid #ffc107;
+}
+
+.order-card.status-approved {
+    border-left: 5px solid #0d6efd;
+}
+
+.order-card.status-in_progress {
+    border-left: 5px solid #6c757d;
+}
+
+.order-card.status-completed {
+    border-left: 5px solid #198754;
+}
+
+.order-card.status-cancelled {
+    border-left: 5px solid #dc3545;
+}
+
+/* Стили для карточек в деталях */
+.card.status-not_approved {
+    border-top: 5px solid #ffc107;
+}
+
+.card.status-approved {
+    border-top: 5px solid #0d6efd;
+}
+
+.card.status-in_progress {
+    border-top: 5px solid #6c757d;
+}
+
+.card.status-completed {
+    border-top: 5px solid #198754;
+}
+
+.card.status-cancelled {
+    border-top: 5px solid #dc3545;
+}
+
+/* Стили для меток статуса */
+.badge {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+
+/* Стили для footer */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 3rem 0;
+}
+
+/* Стили для страницы thanks */
+.thanks-container {
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.thanks-icon {
+    font-size: 5rem;
+    color: #28a745;
+    margin-bottom: 1.5rem;
+}
+
+.countdown {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}

@@ -6,6 +6,8 @@ from .models import Service, Master, Order, Review
 from django.http import JsonResponse
 import datetime
 from decimal import Decimal, InvalidOperation
+from .models import Review, Master
+from .forms import ReviewForm
 
 def landing(request):
     """
@@ -401,3 +403,61 @@ def master_edit(request, master_id=None):
         'services': services,
         'form_data': form_data
     })
+
+def create_review(request):
+    """
+    Представление для создания нового отзыва
+    """
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Создаем новый отзыв, но не публикуем его сразу (требуется модерация)
+            review = form.save(commit=False)
+            review.is_published = False  # Отзыв не публикуется автоматически
+            review.save()
+            
+            # Перенаправляем на страницу благодарности
+            return redirect('review_thanks')
+    else:
+        # Предзаполняем форму, если передан id мастера
+        master_id = request.GET.get('master_id')
+        if master_id:
+            try:
+                master = Master.objects.get(id=master_id)
+                form = ReviewForm(initial={'master': master})
+            except Master.DoesNotExist:
+                form = ReviewForm()
+        else:
+            form = ReviewForm()
+    
+    return render(request, 'core/review_form.html', {'form': form})
+
+def review_thanks(request):
+    """
+    Страница благодарности после отправки отзыва
+    """
+    return render(request, 'core/review_thanks.html')
+
+def get_master_info(request):
+    """
+    Универсальное представление для получения информации о мастере через AJAX.
+    Возвращает данные мастера в формате JSON.
+    """
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        master_id = request.GET.get('master_id')
+        if master_id:
+            try:
+                master = Master.objects.get(pk=master_id)
+                # Формируем данные для ответа
+                master_data = {
+                    'id': master.id,
+                    'name': f"{master.name}",
+                    'experience': master.experience,
+                    'photo': master.photo.url if master.photo else None,
+                    'services': list(master.services.values('id', 'name', 'price')),
+                }
+                return JsonResponse({'success': True, 'master': master_data})
+            except Master.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Мастер не найден'})
+        return JsonResponse({'success': False, 'error': 'Не указан ID мастера'})
+    return JsonResponse({'success': False, 'error': 'Недопустимый запрос'})

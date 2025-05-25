@@ -12,7 +12,8 @@
                     <h4 class="mb-0">Оставить отзыв</h4>
                 </div>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data" id="review-form">
+                    <!-- Добавлен атрибут action с URL-адресом -->
+                    <form method="post" action="{% url 'create_review' %}" enctype="multipart/form-data" id="review-form">
                         {% csrf_token %}
 
                         <!-- Имя клиента -->
@@ -55,8 +56,8 @@
                                     <i class="bi bi-star fs-3 me-1" data-rating="4"></i>
                                     <i class="bi bi-star fs-3" data-rating="5"></i>
                                 </div>
-                                <!-- Скрытое поле рейтинга -->
-                                {{ form.rating }}
+                                <!-- Исправлено скрытое поле рейтинга -->
+                                <input type="hidden" name="rating" id="rating" value="{{ form.rating.value|default:'' }}">
                                 {% if form.rating.errors %}
                                     <div class="invalid-feedback d-block">
                                         {{ form.rating.errors }}
@@ -351,12 +352,17 @@
         }
     });
 
-    // ВАЖНО: Добавляем автоматическую загрузку карточки выбранного мастера при загрузке страницы
+    // Инициализация при загрузке страницы
     document.addEventListener('DOMContentLoaded', function() {
-        // При загрузке страницы проверяем, выбран ли мастер
+        // Инициализация звездочного рейтинга
+        const initialRating = document.getElementById('rating').value;
+        if (initialRating) {
+            updateStars(initialRating);
+        }
+        
+        // Загрузка информации о мастере, если он выбран
         const masterSelect = document.getElementById('id_master');
         if (masterSelect && masterSelect.value) {
-            // Если мастер выбран, загружаем его карточку
             loadMasterInfo(masterSelect.value);
         }
     });

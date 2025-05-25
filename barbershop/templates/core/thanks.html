@@ -9,9 +9,80 @@
     </div>
     <h1>Спасибо за вашу заявку!</h1>
     <p class="lead">Мы получили вашу заявку и свяжемся с вами в ближайшее время для подтверждения записи.</p>
-    
+
     <p>Перенаправление на главную страницу через <span id="countdown">10</span> секунд.</p>
     
-    <a href="{% url 'landing' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+    <!-- Дополнительная секция -->
+    <div class="additional-section my-5">
+        <h3 class="text-center mb-4">Вы не пожалеете потому что мы - это ...</h3>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-scissors" style="font-size: 2rem;"></i>
+                        <h5 class="card-title mt-3">Профессионализм</h5>
+                        <p class="card-text">Наши мастера — это профессионалы своего дела с многолетним опытом.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-clock" style="font-size: 2rem;"></i>
+                        <h5 class="card-title mt-3">Пунктуальность</h5>
+                        <p class="card-text">Мы ценим ваше время и всегда принимаем клиентов точно по записи.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 text-center">
+                    <div class="card-body">
+                        <i class="bi bi-heart" style="font-size: 2rem;"></i>
+                        <h5 class="card-title mt-3">Забота</h5>
+                        <p class="card-text">Мы заботимся о каждом клиенте и стремимся создать комфортную атмосферу.</p>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    
+    <!-- Большая иллюстрация для заполнения пространства -->
+    <div class="thanks-illustration my-5 text-center">
+        <img src="https://elements-resized.envatousercontent.com/elements-cover-images/a31dea83-343f-47d4-a932-d694d0be1184?w=433&cf_fit=scale-down&q=85&format=auto&s=6556378876d770a8efa26b2b590121c3a66e04d54ad98d3f1f03e49bbbe05a1c" 
+             alt="Барбершоп иллюстрация" 
+             style="max-width: 100%; height: auto; max-height: 400px;">
+    </div>
+
+    <!-- Информация -->
+    <div class="card mb-4">
+        <div class="card-body">
+        <h5 class="card-title">Берегите своё время</h5>
+        <p class="card-text">Чтобы не опоздать на стрижку, приходите за 5-10 минут до записи. Если нужно перенести или отменить запись, пожалуйста, сообщите нам заранее.</p>
+        </div>
+    </div>
+    
+    <!-- Кнопка возврата на главную -->
+    <div class="text-center mb-5">
+        <a href="{% url 'landing' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+    </div>
+    
+    <!-- Дополнительное пространство перед футером -->
+    <div style="height: 50px;"></div>
 </div>
+
+<!-- JavaScript для обратного отсчета -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var countdown = 10;
+        var countdownElement = document.getElementById('countdown');
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = "{% url 'landing' %}";
+            }
+        }, 1000);
+    });
+</script>
 {% endblock %}

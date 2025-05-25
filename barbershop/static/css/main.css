@@ -1,6 +1,9 @@
 body {
     font-family: 'Montserrat', sans-serif;
     color: #333;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 .section-title {
@@ -43,16 +46,6 @@ body.fixed-nav {
     padding-top: 76px; /* Высота навбара + немного отступа */
 }
 
-/* Стили для карточек мастеров и услуг */
-.master-card, .service-card {
-    transition: all 0.3s ease;
-    margin-bottom: 1.5rem;
-}
-
-.master-card:hover, .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
 
 
 .card {
@@ -78,23 +71,7 @@ body.fixed-nav {
 .rating .bi-star {
     color: #e4e5e9;
 }
-/* Добавлен класс master-image для изображений мастеров */
-.master-image {
-    width: 400px;
-    height: 400px;
-    position: relative;
-    margin: 0 auto;
-    display: block;
-}
 
-.container-balanced {
-    max-width: 1400px; /* или другой размер, который смотрится хорошо */
-    width: 90%;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 30px;
-    padding-left: 30px;
-}
 
 /* Для секций с фоном - полная ширина фона, но контент с отступами */
 .full-width-section {
@@ -170,17 +147,15 @@ body.fixed-nav {
     border-radius: 0.5rem;
 }
 
-/* Стили для footer */
-footer {
-    background-color: #343a40;
-    color: #fff;
-    padding: 3rem 0;
-}
-
 /* Стили для страницы thanks */
 .thanks-container {
     text-align: center;
     padding: 5rem 0;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 4rem 1rem !important;
 }
 
 .thanks-icon {
@@ -224,6 +199,7 @@ footer {
     font-weight: 600;
     padding-bottom: 12px;
     text-align: center;
+    color: #c59d5f
 }
 
 .section-title:after {
@@ -244,32 +220,6 @@ section {
 
 section:nth-child(even) {
     background-color: #f8f9fa;
-}
-
-/* Улучшенный герой-секция */
-.hero-section {
-    padding: 120px 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/barbershop/barb3.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    text-align: center;
-}
-
-.hero-title {
-    font-size: 3.2rem;
-    font-weight: 700;
-    margin-bottom: 1.2rem;
-    letter-spacing: 0.5px;
-}
-
-.hero-subtitle {
-    font-size: 1.4rem;
-    margin-bottom: 2rem;
-    opacity: 0.85;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Улучшенная навигация */

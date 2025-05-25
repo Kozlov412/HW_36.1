@@ -1,0 +1,226 @@
+/* Стили для страницы услуг */
+.page-header {
+    padding: 60px 0 40px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 15px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #212529;
+}
+
+.title-decoration {
+    display: inline-block;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.title-decoration:before,
+.title-decoration:after {
+    content: "";
+    height: 2px;
+    width: 50px;
+    background-color: #0d6efd;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 15px;
+}
+
+.razor-icon {
+    font-size: 1.5rem;
+    color: #0d6efd;
+}
+
+/* Карточки услуг */
+.service-item {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.service-image-container {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.service-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.service-item:hover .service-image {
+    transform: scale(1.08);
+}
+
+.service-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.service-placeholder i {
+    font-size: 3rem;
+}
+
+.popular-badge {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background-color: #ffc107;
+    color: #212529;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    min-height: 40px; /* Фиксированная высота для заголовка */
+}
+
+.service-description {
+    color: #6c757d;
+    font-size: 0.95rem;
+    min-height: 80px; /* Минимальная высота для описания */
+}
+
+.service-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.feature-item {
+    font-size: 0.85rem;
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 15px;
+    color: #495057;
+}
+
+.feature-item i {
+    color: #28a745;
+    margin-right: 5px;
+}
+
+/* Детали услуги */
+.service-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    height: 60px; /* Фиксированная высота для блока с ценой и продолжительностью */
+}
+
+.service-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.price-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+.service-duration {
+    background-color: #f8f9fa;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.details-btn {
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.details-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
+}
+
+/* Модальное окно услуги */
+.service-modal-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.service-modal-description {
+    color: #495057;
+    line-height: 1.6;
+}
+
+.service-modal-features ul li {
+    margin-bottom: 8px;
+}
+
+.info-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #212529;
+}
+
+.service-modal-price .info-value {
+    color: #0d6efd;
+}
+
+/* Призыв к действию */
+.services-cta {
+    padding: 60px 0;
+    background-color: #212529;
+    margin-top: 40px;
+}
+
+.cta-box {
+    background: linear-gradient(45deg, #343a40, #495057);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}

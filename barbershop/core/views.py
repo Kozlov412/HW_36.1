@@ -191,25 +191,6 @@ def services_page(request):
     }
     return render(request, 'core/services.html', context)
 
-def booking_page(request):
-    """
-    Отдельная страница для формы записи
-    """
-    # Настраиваем минимальную дату для формы (сегодня)
-    today = datetime.date.today()
-    min_date = today.strftime('%Y-%m-%d')
-    
-    # Получаем данные из базы
-    services = Service.objects.all()
-    masters = Master.objects.filter(is_active=True)
-    
-    context = {
-        'min_date': min_date,
-        'services': services,
-        'masters': masters,
-    }
-    return render(request, 'core/booking.html', context)
-
 @login_required  # Ограничим доступ только для авторизованных пользователей
 def service_create(request):
     """
@@ -519,7 +500,7 @@ def booking(request):
         'all_masters': all_masters,
         'min_date': min_date,
     }
-    return render(request, 'booking.html', context)
+    return render(request, 'core/booking.html', context)
 
 def master_services_api(request, master_id):
     """API для получения услуг мастера в формате JSON"""

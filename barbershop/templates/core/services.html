@@ -3,63 +3,158 @@
 
 {% block title %}Услуги - Барбершоп "Стальная Борода"{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
 {% block content %}
+<!-- Заголовок секции с декоративными элементами -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">Наши услуги</h1>
+                <div class="title-decoration">
+                    <span class="razor-icon"><i class="bi bi-scissors"></i></span>
+                </div>
+                <p class="lead text-muted">Профессиональные стрижки и уход за внешностью для настоящих мужчин</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Карточки услуг -->
 <div class="container py-5">
-    <h2 class="section-title mb-4">Наши услуги</h2>
-    
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for service in services %}
         <div class="col">
-            <div class="card h-100 shadow-sm">
-                <!-- Контейнер для изображения с инлайн-стилями -->
-                <div style="height: 220px; overflow: hidden; position: relative;">
+            <div class="card h-100 service-item">
+                <!-- Обложка услуги -->
+                <div class="service-image-container">
                     {% if service.image %}
                     <img src="{{ service.image.url }}" 
-                         style="width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.3s;"
-                         alt="{{ service.name }}"
-                         onmouseover="this.style.transform='scale(1.1)'" 
-                         onmouseout="this.style.transform='scale(1)'">
+                         class="service-image"
+                         alt="{{ service.name }}">
+                    {% if service.is_popular %}
+                    <div class="popular-badge">
+                        <i class="bi bi-star-fill"></i> Популярная
+                    </div>
+                    {% endif %}
                     {% else %}
                     <!-- Плейсхолдер, если изображение отсутствует -->
-                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa;">
-                        <span style="font-size: 24px; color: #adb5bd;">Нет изображения</span>
+                    <div class="service-placeholder">
+                        <i class="bi bi-image text-muted"></i>
                     </div>
                     {% endif %}
                 </div>
                 
-                <div class="card-body">
+                <!-- Содержимое карточки -->
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ service.name }}</h5>
-                    <p class="card-text">{{ service.description|default:'Профессиональный подход и внимание к деталям делают наши услуги уникальными.' }}</p>
-                    <p class="card-text">
-                        <span class="badge bg-primary">{{ service.price }} руб.</span>
-                        <span class="badge bg-secondary">{{ service.duration }} мин.</span>
-                        {% if service.is_popular %}
-                        <span class="badge bg-warning text-dark">Популярная услуга</span>
-                        {% endif %}
-                    </p>
+                    
+                    <!-- Обрезанное описание для стандартного вида -->
+                    <div class="service-description" id="shortDesc{{ service.id }}">
+                        <p>{{ service.description|default:'Профессиональный подход и внимание к деталям делают наши услуги уникальными.'|truncatechars:120 }}</p>
+                    </div>
+                    
+                    <!-- Увеличиваем пространство между контентом и футером карточки -->
+                    <div class="flex-grow-1"></div>
+                    
+                    <!-- Детали услуги с фиксированной высотой -->
+                    <div class="service-details">
+                        <div class="service-price">
+                            <span class="price-label">Цена:</span>
+                            <span class="price-value">{{ service.price }} ₽</span>
+                        </div>
+                        <div class="service-duration">
+                            <i class="bi bi-clock"></i>
+                            <span>{{ service.duration }} мин.</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопка "Подробнее" вместо кнопки записи -->
+                    <button class="btn btn-primary w-100 details-btn" 
+                            data-id="{{ service.id }}"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#serviceModal{{ service.id }}">
+                        Подробнее
+                    </button>
                 </div>
-                <div class="card-footer bg-transparent border-top-0">
-                    <a href="{% url 'booking' %}" class="btn btn-outline-primary w-100">Записаться</a>
+            </div>
+            
+            <!-- Модальное окно для подробной информации об услуге (увеличенный размер) -->
+            <div class="modal fade" id="serviceModal{{ service.id }}" tabindex="-1" aria-labelledby="serviceModalLabel{{ service.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Изменено на modal-lg для большего размера -->
+                    <div class="modal-content">
+                        <div class="modal-header border-0"> 
+                            <h5 class="modal-title" id="serviceModalLabel{{ service.id }}">{{ service.name }}</h5>
+                            <!-- Крестик удален -->
+                        </div>
+                        <div class="modal-body pt-0">
+                            {% if service.image %}
+                            <img src="{{ service.image.url }}" class="img-fluid service-modal-image mb-4" alt="{{ service.name }}">
+                            {% endif %}
+                            
+                            <div class="service-modal-description">
+                                <p>{{ service.description|default:'Профессиональный подход и внимание к деталям делают наши услуги уникальными.' }}</p>
+                            </div>
+                            
+                            <div class="service-modal-features mt-4">
+                                <h6>Преимущества услуги:</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> Предоставляется опытными мастерами</li>
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> Используем профессиональную косметику</li>
+                                    <li><i class="bi bi-check-circle-fill text-success"></i> Гарантируем превосходный результат</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="service-modal-info mt-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="service-modal-price">
+                                            <span class="info-label">Стоимость:</span>
+                                            <span class="info-value">{{ service.price }} ₽</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="service-modal-duration">
+                                            <span class="info-label">Продолжительность:</span>
+                                            <span class="info-value">{{ service.duration }} мин.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-0 d-flex justify-content-center">
+                            <!-- Убрана кнопка "Записаться", оставлена только кнопка "Закрыть" -->
+                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12">
             <div class="alert alert-info">
-                В данный момент нет доступных услуг.
+                <i class="bi bi-info-circle me-2"></i> В данный момент нет доступных услуг.
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
 
-
 <!-- Призыв к действию -->
-<section class="py-5 bg-dark text-white">
-    <div class="container text-center">
-        <h2 class="mb-4">Готовы попробовать наши услуги?</h2>
-        <p class="lead mb-4">Запишитесь на прием прямо сейчас и получите первоклассный сервис!</p>
-        <a href="{% url 'booking' %}" class="btn btn-light btn-lg">Записаться</a>
+<section class="services-cta">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="cta-box text-center p-5">
+                    <h3 class="mb-3">Готовы обновить свой стиль?</h3>
+                    <p class="mb-4">Наши профессиональные мастера ждут вас. Запишитесь прямо сейчас!</p>
+                    <a href="{% url 'booking' %}" class="btn btn-light btn-lg px-5">Записаться на стрижку</a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

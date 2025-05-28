@@ -76,6 +76,9 @@ class Order(models.Model):
     )
     services = models.ManyToManyField(Service, related_name="orders", verbose_name="Услуги")
     appointment_date = models.DateTimeField(verbose_name="Дата и время записи")
+
+    # Поле для отслеживания отправки уведомлений
+    notification_sent = models.BooleanField(default=False, verbose_name="Уведомление отправлено")
     
     def __str__(self):
         return f"Заказ {self.id} - {self.client_name} ({self.status})"

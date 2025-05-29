@@ -24,8 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.getenv('SECRET_KEY')
+
+# Telegram bot settings
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 TELEGRAM_ADMIN_CHAT_ID = os.getenv('TELEGRAM_ADMIN_CHAT_ID')
+
+# URL сайта для формирования полных URL в уведомлениях
+SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -43,8 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'django.contrib.sites',
+    'core.apps.CoreConfig',
     'django_extensions',
+    
 ]
 
 # Для работы с изображениями (ImageField)
@@ -145,5 +152,5 @@ LOGOUT_REDIRECT_URL = 'landing'
 
 APPEND_SLASH = True 
 
-# URL сайта для формирования полных URL в уведомлениях
-SITE_URL = os.getenv('SITE_URL', 'http://localhost:8000')
+
+

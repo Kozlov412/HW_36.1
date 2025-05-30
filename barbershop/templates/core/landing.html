@@ -90,15 +90,22 @@
                         {% else %}
                         <img src="{% static 'img/masters/__1.png' %}" class="master-image" alt="{{ master.name }}">
                         {% endif %}
-                        <div class="master-experience">{{ master.experience }} 
-                            {% if master.experience == 1 %}
+                        <div class="master-experience">
+                            {{ master.experience }} 
+                            {% with exp=master.experience %}
+                            {% if exp == 1 %}
                                 год
-                            {% elif 2 <= master.experience <= 4 %}
+                            {% elif exp == 2 or exp == 3 or exp == 4 %}
+                                года
+                            {% elif exp == 21 or exp == 31 or exp == 41 or exp == 51 or exp == 61 or exp == 71 or exp == 81 or exp == 91 %}
+                                год
+                            {% elif exp == 22 or exp == 23 or exp == 24 or exp == 32 or exp == 33 or exp == 34 or exp == 42 or exp == 43 or exp == 44 or exp == 52 or exp == 53 or exp == 54 or exp == 62 or exp == 63 or exp == 64 %}
                                 года
                             {% else %}
                                 лет
                             {% endif %}
-                        </div>
+                        {% endwith %}
+                </div>
                     </div>
                     <div class="master-info">
                         <h3 class="master-name">{{ master.name }}</h3>
